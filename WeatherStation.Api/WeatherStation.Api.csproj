@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
+    </ItemGroup>
+
+    <Target Name="GenerateOpenApiSpec" AfterTargets="Build">
+        <Exec Command="dotnet tool restore" />
+
+        <PropertyGroup>
+            <OpenApiOutputDir>$(MSBuildProjectDirectory)\openapi\</OpenApiOutputDir>
+        </PropertyGroup>
+
+        <MakeDir Directories="$(OpenApiOutputDir)" Condition="!Exists('$(OpenApiOutputDir)')" />
+
+        <Exec Command="dotnet swagger tofile --output &quot;$(OpenApiOutputDir)openapi.json&quot; &quot;$(OutputPath)$(AssemblyName).dll&quot; v1" />
+        <Exec Command="dotnet swagger tofile --output &quot;$(OpenApiOutputDir)openapi.yaml&quot; --yaml &quot;$(OutputPath)$(AssemblyName).dll&quot; v1" />
+    </Target>
+    
+</Project>
