@@ -58,6 +58,9 @@ public class WeatherReadingsController : ControllerBase
     /// <summary>
     /// Adds a new weather reading.
     /// </summary>
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(WeatherReading), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
     [HttpPost]
     public ActionResult<WeatherReading> Add([FromBody] WeatherReading reading)
     {
