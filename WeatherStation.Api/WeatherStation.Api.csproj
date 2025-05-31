@@ -7,21 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
+      <PackageReference Include="NSwag.AspNetCore" Version="14.4.0" />
+      <PackageReference Include="Scalar.AspNetCore" Version="2.4.7" />
     </ItemGroup>
 
-    <Target Name="GenerateOpenApiSpec" AfterTargets="Build">
-        <Exec Command="dotnet tool restore" />
+    <ItemGroup>
+      <Folder Include="openapi\" />
+    </ItemGroup>
 
-        <PropertyGroup>
-            <OpenApiOutputDir>$(MSBuildProjectDirectory)\openapi\</OpenApiOutputDir>
-        </PropertyGroup>
-
-        <MakeDir Directories="$(OpenApiOutputDir)" Condition="!Exists('$(OpenApiOutputDir)')" />
-
-        <Exec Command="dotnet swagger tofile --output &quot;$(OpenApiOutputDir)openapi.json&quot; &quot;$(OutputPath)$(AssemblyName).dll&quot; v1" />
-        <Exec Command="dotnet swagger tofile --output &quot;$(OpenApiOutputDir)openapi.yaml&quot; --yaml &quot;$(OutputPath)$(AssemblyName).dll&quot; v1" />
+    <Target Name="GenerateOpenApi" AfterTargets="Build">
+      <Exec Command="dotnet nswag run nswag.json" />
     </Target>
     
 </Project>
