@@ -5,19 +5,19 @@ This is a PoC ASP.NET Core Web API project demonstrating automatic generation of
 ## Requirements
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
-- [Swashbuckle.AspNetCore CLI tool](https://www.nuget.org/packages/Swashbuckle.AspNetCore.Cli) (restored automatically)
+- [NSwag CLI tool (NSwag.ConsoleCore)](https://www.nuget.org/packages/NSwag.ConsoleCore) — installed via `dotnet tool restore`
 
 ## Features
 
 - ASP.NET Core Web API with sample weather endpoints.
-- OpenAPI (Swagger) documentation generated automatically.
-- OpenAPI specs output as both `openapi.json` and `openapi.yaml` files.
+- OpenAPI documentation generated automatically using [NSwag](https://github.com/RicoSuter/NSwag).
+- OpenAPI specs output as both `openapi.json` and `openapi.yaml`.
 
 ## How It Works
 
-- The project uses [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) for Swagger/OpenAPI generation.
-- The `.csproj` file defines a custom MSBuild target (`GenerateOpenApiSpec`) that runs after each build.
-- This target uses the [Swashbuckle CLI tool](https://www.nuget.org/packages/Swashbuckle.AspNetCore.Cli) to generate the OpenAPI specs in both JSON and YAML formats and writes them to the `openapi/` directory.
+- The project uses [NSwag.ConsoleCore](https://www.nuget.org/packages/NSwag.ConsoleCore) to generate OpenAPI documents from the ASP.NET Core project.
+- The `WeatherStation.Api.csproj` defines a custom MSBuild target (`GenerateOpenApi`) that runs after each build.
+- This target runs `dotnet nswag` twice—once to produce `openapi.json`, and once to produce `openapi.yaml`—based on a shared `nswag.json` configuration file.
 
 ## Usage
 
