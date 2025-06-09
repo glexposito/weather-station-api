@@ -16,7 +16,8 @@
     </ItemGroup>
 
     <Target Name="GenerateOpenApi" AfterTargets="Build">
-      <Exec Command="dotnet nswag run nswag.json" />
+      <Exec Command="dotnet nswag run nswag.json /variables:output=openapi/openapi.json" />
+      <Exec Command="dotnet nswag run nswag.json /variables:output=openapi/openapi.yaml" />
     </Target>
     
 </Project>
